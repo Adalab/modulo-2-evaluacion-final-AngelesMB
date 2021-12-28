@@ -1,0 +1,25 @@
+.results {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.fav--container {
+  width: 25%;
+  margin: 5px;
+  background-color: black;
+  color: white;
+}
+
+.shows--container {
+  width: 45%;
+  background-color: black;
+  margin: 5px;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.show--preview {
+    width: 300px;
+}

@@ -26,8 +26,25 @@ function getDataApi() {
 function renderShows() {
   containerElem.innerHTML = "";
   for (const eachShow of showsArray) {
-    containerElem.innerHTML += `<p>${eachShow.title}</p> <img src=${eachShow.image_url}>`;
+    const eachShowContainer = document.createElement("div");
+    eachShowContainer.classList.add("show--preview");
+    renderTitle(eachShowContainer, eachShow);
+    renderImage(eachShowContainer, eachShow);
   }
+}
+
+function renderTitle(div, show) {
+  const titleElem = document.createElement("h4");
+  const title = document.createTextNode(show.title);
+  titleElem.appendChild(title);
+  div.appendChild(titleElem);
+}
+
+function renderImage(div, show) {
+  const img = document.createElement("img");
+  img.src = show.image_url;
+  div.appendChild(img);
+  containerElem.appendChild(div);
 }
 
 function handleSearchButtonClick(event) {
