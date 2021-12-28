@@ -1,12 +1,13 @@
 <h1>Buscador de series de anime</h1>
-<label for="search"
-  >Escribe aquí el nombre de la serie que quieres buscar:</label
->
-<input type="text" name="search" id="search" />
-<input type="submit" value="Buscar" />
-<input type="reset" value="Reset" />
-
+<form action="">
+  <label for="search"
+    >Escribe aquí el nombre de la serie que quieres buscar:</label
+  >
+  <input type="text" name="search" id="search" class="js-search" />
+  <input type="submit" value="Buscar" class="js-searchButton" />
+  <input type="reset" value="Reset" class="js-resetButton"/>
+</form>
 <h4>Series favoritas</h4>
 <div>Aquí saldrán las favoritas</div>
 <h4>Resultados</h4>
-<div>Aquí saldrán todas</div>
+<div class="js-container">Aquí saldrán todas</div>
