@@ -21,5 +21,11 @@
 }
 
 .show--preview {
-    width: 300px;
+  width: 300px;
+  cursor: pointer;
+}
+
+.favorite {
+  background-color: white;
+  color: black;
 }
