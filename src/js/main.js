@@ -2,12 +2,14 @@
 
 const searchElem = document.querySelector(".js-search");
 const containerElem = document.querySelector(".js-container");
+const favContainerElem = document.querySelector(".js-favContainer");
 const searchButton = document.querySelector(".js-searchButton");
 const resetButton = document.querySelector(".js-resetButton");
 
 const APIPath = "https://api.jikan.moe/v3/search/anime?q=";
 
 let showsArray = [];
+let favShowsArray = [];
 let searchValue = "";
 
 function getSearchValue() {
@@ -26,9 +28,9 @@ function renderImage(div, show) {
   const divImg = document.createElement("div");
   divImg.classList.add("image--preview");
   div.appendChild(divImg);
-  console.log(show.image_url);
+  // console.log(show.image_url);
   // if (show.image_url !== "") {
-    divImg.setAttribute("style", `background-image:url(${show.image_url})`);
+  divImg.setAttribute("style", `background-image:url(${show.image_url})`);
   // } else {
   //   const noImgMessageElem = document.createElement("p");
   //   const noImgMessage = document.createTextNode(
@@ -54,6 +56,7 @@ function renderShows() {
   for (const eachShow of showsArray) {
     const eachShowContainer = document.createElement("div");
     eachShowContainer.classList.add("show--preview");
+    eachShowContainer.setAttribute("data-id", eachShow.mal_id);
     renderTitle(eachShowContainer, eachShow);
     renderImage(eachShowContainer, eachShow);
     eachShowContainer.addEventListener("click", handleShowClick);
@@ -80,13 +83,30 @@ function setAsFavorite(event) {
   selectedShow.classList.toggle("favorite");
 }
 
+function renderFavList(arr) {
+  favContainerElem.innerHTML = "";
+  for (const eachShow of arr) {
+    favContainerElem.innerHTML += `<h4>${eachShow.title}</h4>`;
+  }
+}
+
 function saveAsFavorite(event) {
-  console.log(`guardada como favorita:${event.currentTarget.textContent}`);
+  const showFavId = parseInt(event.currentTarget.dataset.id);
+  const showFound = showsArray.find((show) => show.mal_id === showFavId);
+  const showFavIndex = favShowsArray.findIndex(
+    (favShow) => favShow.mal_id === showFavId
+  );
+  if (event.currentTarget.classList.contains("favorite")) {
+    favShowsArray.push(showFound);
+  } else {
+    favShowsArray.splice(showFavIndex, 1);
+  }
 }
 
 function handleShowClick(event) {
   setAsFavorite(event);
   saveAsFavorite(event);
+  renderFavList(favShowsArray);
 }
 
 function handleResetButtonClick(event) {
