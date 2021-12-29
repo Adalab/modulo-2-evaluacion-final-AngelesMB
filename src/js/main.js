@@ -124,10 +124,9 @@ function handleResetButtonClick(event) {
 
 function getDataLS() {
   const favShowsArrayLS = JSON.parse(localStorage.getItem("favShowsArrayLS"));
-  favShowsArray = favShowsArrayLS;
-  if (favShowsArrayLS !== "null") {
+  if (favShowsArrayLS !== null) {
+    favShowsArray = favShowsArrayLS;
     renderFavList();
-    console.log("Desde el LS");
   }
 }
 
