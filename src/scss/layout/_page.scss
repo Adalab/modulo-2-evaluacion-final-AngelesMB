@@ -1,4 +1,4 @@
-*{
+* {
   font-family: rubik;
 }
 
@@ -9,10 +9,13 @@
 }
 
 .fav--container {
-  width: 25%;
+  width: 20%;
   margin: 5px;
   background-color: black;
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .shows--container {
@@ -22,6 +25,8 @@
   color: white;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .show--preview {
@@ -35,6 +40,16 @@
 
 .fav--show--preview {
   color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.remove--fav--icon {
+  width: 20px;
+  height: 20px;
+  background-color: red;
 }
 
 .favorite {
@@ -43,10 +58,14 @@
 }
 
 .title--preview {
-  text-align: center;
   width: 220px;
+  height: 55px;
   margin: 5px 0;
   font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .image--preview {

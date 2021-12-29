@@ -28,17 +28,7 @@ function renderImage(div, show, container) {
   const divImg = document.createElement("div");
   divImg.classList.add("image--preview");
   div.appendChild(divImg);
-  // console.log(show.image_url);
-  // if (show.image_url !== "") {
   divImg.setAttribute("style", `background-image:url(${show.image_url})`);
-  // } else {
-  //   const noImgMessageElem = document.createElement("p");
-  //   const noImgMessage = document.createTextNode(
-  //     "No existe una imagen disponible"
-  //   );
-  //   noImgMessageElem.appendChild(noImgMessage);
-  //   divImg.appendChild(noImgMessageElem);
-  // }
   renderSynopsis(div, show, divImg, container);
 }
 
@@ -83,13 +73,36 @@ function setAsFavorite(event) {
   selectedShow.classList.toggle("favorite");
 }
 
+function removeFavFromArray(event) {
+  const showFavId = parseInt(event.currentTarget.parentNode.dataset.id);
+  const showFavIndex = favShowsArray.findIndex(
+    (favShow) => favShow.mal_id === showFavId
+  );
+  favShowsArray.splice(showFavIndex, 1);
+}
+
+function handleRemoveFavClick(event) {
+  removeFavFromArray(event);
+  saveToLS();
+  renderFavList();
+}
+
+function renderRemoveFavIcon(container) {
+  const removeFavIcon = document.createElement("div");
+  removeFavIcon.classList.add("remove--fav--icon");
+  removeFavIcon.addEventListener("click", handleRemoveFavClick);
+  container.appendChild(removeFavIcon);
+}
+
 function renderFavList() {
   favContainerElem.innerHTML = "";
   for (const eachShow of favShowsArray) {
     const eachShowContainer = document.createElement("div");
     eachShowContainer.classList.add("fav--show--preview");
+    eachShowContainer.setAttribute("data-id", eachShow.mal_id);
     renderTitle(eachShowContainer, eachShow);
     renderImage(eachShowContainer, eachShow, favContainerElem);
+    renderRemoveFavIcon(eachShowContainer);
   }
 }
 
