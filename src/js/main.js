@@ -17,14 +17,35 @@ function getSearchValue() {
 function renderTitle(div, show) {
   const titleElem = document.createElement("h4");
   const title = document.createTextNode(show.title);
+  titleElem.classList.add("title--preview");
   titleElem.appendChild(title);
   div.appendChild(titleElem);
 }
 
 function renderImage(div, show) {
-  const img = document.createElement("img");
-  img.src = show.image_url;
-  div.appendChild(img);
+  const divImg = document.createElement("div");
+  divImg.classList.add("image--preview");
+  div.appendChild(divImg);
+  console.log(show.image_url);
+  // if (show.image_url !== "") {
+    divImg.setAttribute("style", `background-image:url(${show.image_url})`);
+  // } else {
+  //   const noImgMessageElem = document.createElement("p");
+  //   const noImgMessage = document.createTextNode(
+  //     "No existe una imagen disponible"
+  //   );
+  //   noImgMessageElem.appendChild(noImgMessage);
+  //   divImg.appendChild(noImgMessageElem);
+  // }
+  renderSynopsis(div, show, divImg);
+}
+
+function renderSynopsis(div, show, divImg) {
+  const synopsisElem = document.createElement("p");
+  const synopsis = document.createTextNode(show.synopsis);
+  synopsisElem.classList.add("synopsis--preview", "hidden");
+  synopsisElem.appendChild(synopsis);
+  divImg.appendChild(synopsisElem);
   containerElem.appendChild(div);
 }
 

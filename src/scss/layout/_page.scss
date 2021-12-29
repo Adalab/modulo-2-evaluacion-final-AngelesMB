@@ -1,3 +1,7 @@
+*{
+  font-family: rubik;
+}
+
 .results {
   display: flex;
   justify-content: center;
@@ -23,9 +27,41 @@
 .show--preview {
   width: 300px;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .favorite {
   background-color: white;
   color: black;
+}
+
+.title--preview {
+  text-align: center;
+  width: 220px;
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.image--preview {
+  width: 220px;
+  height: 295px;
+  border-radius: 5px;
+  &:hover {
+    // opacity: 0.5;
+    transform: scale(1.01);
+  }
+}
+
+// .synopsis--preview {
+
+// }
+
+.hidden {
+  opacity: 0;
+  &:hover {
+    opacity: 1;
+  }
 }

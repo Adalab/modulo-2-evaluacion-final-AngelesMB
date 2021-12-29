@@ -1,6 +1,6 @@
 # Módulo 2: Ejercicio de evaluación final JavaScript
 
-# Enunciado:
+**Enunciado:**
 
 El ejercicio consiste en desarrollar una aplicación web de búsqueda de series de anime, que nos permite des/marcar las series como favoritas y guardarlas en local storage. El ejercicio también tiene una parte de maquetación con HTML y Sass.
 
