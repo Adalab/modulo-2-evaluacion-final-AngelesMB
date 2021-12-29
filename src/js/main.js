@@ -24,7 +24,7 @@ function renderTitle(div, show) {
   div.appendChild(titleElem);
 }
 
-function renderImage(div, show) {
+function renderImage(div, show, container) {
   const divImg = document.createElement("div");
   divImg.classList.add("image--preview");
   div.appendChild(divImg);
@@ -39,16 +39,16 @@ function renderImage(div, show) {
   //   noImgMessageElem.appendChild(noImgMessage);
   //   divImg.appendChild(noImgMessageElem);
   // }
-  renderSynopsis(div, show, divImg);
+  renderSynopsis(div, show, divImg, container);
 }
 
-function renderSynopsis(div, show, divImg) {
+function renderSynopsis(div, show, divImg, container) {
   const synopsisElem = document.createElement("p");
   const synopsis = document.createTextNode(show.synopsis);
   synopsisElem.classList.add("synopsis--preview", "hidden");
   synopsisElem.appendChild(synopsis);
   divImg.appendChild(synopsisElem);
-  containerElem.appendChild(div);
+  container.appendChild(div);
 }
 
 function renderShows() {
@@ -58,7 +58,7 @@ function renderShows() {
     eachShowContainer.classList.add("show--preview");
     eachShowContainer.setAttribute("data-id", eachShow.mal_id);
     renderTitle(eachShowContainer, eachShow);
-    renderImage(eachShowContainer, eachShow);
+    renderImage(eachShowContainer, eachShow, containerElem);
     eachShowContainer.addEventListener("click", handleShowClick);
   }
 }
@@ -83,11 +83,18 @@ function setAsFavorite(event) {
   selectedShow.classList.toggle("favorite");
 }
 
-function renderFavList(arr) {
+function renderFavList() {
   favContainerElem.innerHTML = "";
-  for (const eachShow of arr) {
-    favContainerElem.innerHTML += `<h4>${eachShow.title}</h4>`;
+  for (const eachShow of favShowsArray) {
+    const eachShowContainer = document.createElement("div");
+    eachShowContainer.classList.add("fav--show--preview");
+    renderTitle(eachShowContainer, eachShow);
+    renderImage(eachShowContainer, eachShow, favContainerElem);
   }
+}
+
+function saveToLS() {
+  localStorage.setItem("favShowsArrayLS", JSON.stringify(favShowsArray));
 }
 
 function saveAsFavorite(event) {
@@ -101,18 +108,30 @@ function saveAsFavorite(event) {
   } else {
     favShowsArray.splice(showFavIndex, 1);
   }
+  saveToLS();
 }
 
 function handleShowClick(event) {
   setAsFavorite(event);
   saveAsFavorite(event);
-  renderFavList(favShowsArray);
+  renderFavList();
 }
 
 function handleResetButtonClick(event) {
   //   event.preventDefault();
   console.log("Has clickado en reset");
 }
+
+function getDataLS() {
+  const favShowsArrayLS = JSON.parse(localStorage.getItem("favShowsArrayLS"));
+  favShowsArray = favShowsArrayLS;
+  if (favShowsArrayLS !== "null") {
+    renderFavList();
+    console.log("Desde el LS");
+  }
+}
+
+getDataLS();
 
 searchButton.addEventListener("click", handleSearchButtonClick);
 resetButton.addEventListener("click", handleResetButtonClick);
