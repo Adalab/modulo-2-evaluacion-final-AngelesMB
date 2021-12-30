@@ -165,8 +165,9 @@ function handleShowClick(event) {
 }
 
 function handleResetButtonClick(event) {
-  //   event.preventDefault();
-  console.log("Has clickado en reset");
+  // event.preventDefault();
+  showsArray = [];
+  renderShows();
 }
 
 function getDataLS() {
