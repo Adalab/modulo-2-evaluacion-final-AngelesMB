@@ -123,20 +123,39 @@ function handleRemoveFavClick(event) {
 
 function renderRemoveFavIcon(container) {
   const removeFavIcon = document.createElement("div");
+  // añadir clase con espacios icono de font awesome
   removeFavIcon.classList.add("remove--fav--icon");
   removeFavIcon.addEventListener("click", handleRemoveFavClick);
   container.appendChild(removeFavIcon);
 }
 
+function handleResetButtonFavClick() {
+  favShowsArray = [];
+  saveToLS();
+  renderFavList();
+  renderShows();
+}
+
+function renderResetButtonFav() {
+  const resetButtonFav = document.createElement("input");
+  resetButtonFav.setAttribute("type", "reset");
+  resetButtonFav.setAttribute("value", "Limpiar favoritos");
+  resetButtonFav.addEventListener("click", handleResetButtonFavClick);
+  favContainerElem.appendChild(resetButtonFav);
+}
+
 function renderFavList() {
   favContainerElem.innerHTML = "";
-  for (const eachShow of favShowsArray) {
-    const eachShowContainer = document.createElement("div");
-    eachShowContainer.classList.add("fav--show--preview");
-    eachShowContainer.setAttribute("data-id", eachShow.mal_id);
-    renderTitle(eachShowContainer, eachShow);
-    renderImage(eachShowContainer, eachShow, favContainerElem);
-    renderRemoveFavIcon(eachShowContainer);
+  if (favShowsArray.length !== 0) {
+    renderResetButtonFav();
+    for (const eachShow of favShowsArray) {
+      const eachShowContainer = document.createElement("div");
+      eachShowContainer.classList.add("fav--show--preview");
+      eachShowContainer.setAttribute("data-id", eachShow.mal_id);
+      renderTitle(eachShowContainer, eachShow);
+      renderImage(eachShowContainer, eachShow, favContainerElem);
+      renderRemoveFavIcon(eachShowContainer);
+    }
   }
 }
 
