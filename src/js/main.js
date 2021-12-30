@@ -41,6 +41,24 @@ function renderSynopsis(div, show, divImg, container) {
   container.appendChild(div);
 }
 
+// revisar función
+function checkIfFavorite(eachShow) {
+  if (favShowsArray !== []) {
+    const foundInFavArray = favShowsArray.find(
+      (eachFavShow) => eachFavShow.mal_id === eachShow.mal_id
+    );
+    if (foundInFavArray !== undefined) {
+      const results = document.querySelectorAll(".show--preview");
+      const resultsArray = Array.from(results);
+      for (const eachShow of resultsArray) {
+        if (parseInt(eachShow.dataset.id) === foundInFavArray.mal_id) {
+          eachShow.classList.add("favorite");
+        }
+      }
+    }
+  }
+}
+
 function renderShows() {
   containerElem.innerHTML = "";
   for (const eachShow of showsArray) {
@@ -50,6 +68,7 @@ function renderShows() {
     renderTitle(eachShowContainer, eachShow);
     renderImage(eachShowContainer, eachShow, containerElem);
     eachShowContainer.addEventListener("click", handleShowClick);
+    checkIfFavorite(eachShow);
   }
 }
 
@@ -71,7 +90,6 @@ function handleSearchButtonClick(event) {
 function setAsFavorite(event) {
   const selectedShow = event.currentTarget;
   selectedShow.classList.toggle("favorite");
-  // selectedShow.setAttribute("data-fav", true);
 }
 
 function setAsNotFavorite(showFavId) {
