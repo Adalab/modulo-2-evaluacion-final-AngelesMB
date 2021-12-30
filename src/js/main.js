@@ -71,6 +71,21 @@ function handleSearchButtonClick(event) {
 function setAsFavorite(event) {
   const selectedShow = event.currentTarget;
   selectedShow.classList.toggle("favorite");
+  // selectedShow.setAttribute("data-fav", true);
+}
+
+function setAsNotFavorite(showFavId) {
+  // Por qué el nodelist que devuelve el qsAll no permite hacer find
+  if (showsArray.length !== 0) {
+    const showPreviewFavs = document.querySelectorAll(".favorite");
+    const showPreviewFavsArr = Array.from(showPreviewFavs);
+    const resultsFavShow = showPreviewFavsArr.find(
+      (eachShow) => parseInt(eachShow.dataset.id) === showFavId
+    );
+    if (resultsFavShow !== undefined) {
+      resultsFavShow.classList.remove("favorite");
+    }
+  }
 }
 
 function removeFavFromArray(event) {
@@ -79,6 +94,7 @@ function removeFavFromArray(event) {
     (favShow) => favShow.mal_id === showFavId
   );
   favShowsArray.splice(showFavIndex, 1);
+  setAsNotFavorite(showFavId);
 }
 
 function handleRemoveFavClick(event) {
