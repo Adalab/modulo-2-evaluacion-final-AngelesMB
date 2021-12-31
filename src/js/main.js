@@ -105,6 +105,8 @@ function handleSearchButtonClick(event) {
   getSearchValue();
   if (searchValue === "") {
     containerElem.innerHTML = "Venga, busca algo.";
+  } else if (searchValue.length < 3) {
+    containerElem.innerHTML = "Introduce al menos 3 caracteres.";
   } else {
     getDataApi();
   }

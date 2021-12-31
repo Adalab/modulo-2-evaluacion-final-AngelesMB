@@ -1,5 +1,10 @@
 .main {
   width: 1240px;
+  &--title {
+    color: white;
+    text-transform: capitalize;
+    padding: 5px;
+  }
   &--form {
     border: 2px solid white;
     border-radius: 5px;
@@ -126,7 +131,7 @@
   border-radius: 50%;
   background-color: $green;
   transition: all 0.1s ease-out;
-  &:hover{
+  &:hover {
     background-color: white;
   }
 }
