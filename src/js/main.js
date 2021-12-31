@@ -6,8 +6,6 @@ const favContainerElem = document.querySelector(".js-favContainer");
 const searchButton = document.querySelector(".js-searchButton");
 const resetButton = document.querySelector(".js-resetButton");
 
-const arrowIcon = document.querySelector(".footer--icon");
-
 const APIPath = "https://api.jikan.moe/v3/search/anime?q=";
 
 let showsArray = [];
@@ -21,14 +19,14 @@ function getSearchValue() {
 function renderTitle(div, show) {
   const titleElem = document.createElement("h4");
   const title = document.createTextNode(show.title);
-  titleElem.classList.add("title--preview");
+  titleElem.classList.add("preview--title");
   titleElem.appendChild(title);
   div.appendChild(titleElem);
 }
 
 function renderImage(div, show, container) {
   const divImg = document.createElement("div");
-  divImg.classList.add("image--preview");
+  divImg.classList.add("preview--image");
   div.appendChild(divImg);
   divImg.setAttribute("style", `background-image:url(${show.image_url})`);
   renderSynopsis(div, show, divImg, container);
@@ -37,7 +35,7 @@ function renderImage(div, show, container) {
 function renderSynopsis(div, show, divImg, container) {
   const synopsisElem = document.createElement("p");
   const synopsis = document.createTextNode(show.synopsis);
-  synopsisElem.classList.add("synopsis--preview", "hidden");
+  synopsisElem.classList.add("preview--synopsis", "hidden");
   synopsisElem.appendChild(synopsis);
   divImg.appendChild(synopsisElem);
   container.appendChild(div);
@@ -149,6 +147,7 @@ function handleRemoveFavClick(event) {
 function renderRemoveFavIcon(container) {
   const removeFavIcon = document.createElement("div");
   // añadir clase con espacios icono de font awesome
+  // const faIconClass = "far fa-times-circle"
   removeFavIcon.classList.add("fav--remove__icon");
   removeFavIcon.addEventListener("click", handleRemoveFavClick);
   container.appendChild(removeFavIcon);
@@ -224,8 +223,5 @@ function getDataLS() {
 
 getDataLS();
 
-function handleArrowClick() {}
-
 searchButton.addEventListener("click", handleSearchButtonClick);
 resetButton.addEventListener("click", handleResetButtonClick);
-arrowIcon.addEventListener("click", handleArrowClick);
