@@ -20,29 +20,41 @@
   </head>
 
   <body>
-    
+    <header class="header">
+      <h1 class="header--title">Busca<span class="header--subtitle">nime</span></h1>
+    </header>
 
-    <h1>Buscador de series de anime</h1>
-    <form action="">
-      <label for="search"
-        >Escribe aquí el nombre de la serie que quieres buscar:</label
-      >
-      <input type="text" name="search" id="search" class="js-search" />
-      <input type="submit" value="Buscar" class="js-searchButton" />
-      <input type="reset" value="Reset" class="js-resetButton" />
-    </form>
-    <section class="results">
-      <div class="fav--container js-favContainer">
-        <h4>Series favoritas</h4>
-        Aquí saldrán las favoritas
+    <main class="main">
+      <h2 class="main--title">Buscador de series de anime</h2>
+      <form action="" class="main--form">
+        <label for="search" class="main--searchIcon"
+          ><i class="fas fa-search"></i
+        ></label>
+        <input
+          type="text"
+          name="search"
+          id="search"
+          class="main--input js-search"
+          placeholder="Busca por título..."
+        />
+        <input type="submit" value="Buscar" class="main--button js-searchButton" />
+        <input type="reset" value="Reset" class="main--button js-resetButton" />
+      </form>
+      <div class="results">
+        <section class="results--fav">
+          <h4 class="container--title">Series favoritas</h4>
+          <div class="container--fav js-favContainer"></div>
+        </section>
+        <section class="results--shows">
+          <h4 class="container--title">Resultados</h4>
+          <div class="container--shows js-container"></div>
+        </section>
       </div>
-      <div class="shows--container js-container">
-        <h4>Resultados</h4>
-        Aquí saldrán todas
-      </div>
-    </section>
+    </main>
 
-    
+    <footer class="footer">
+      <a href="#"><i class="fas fa-arrow-up footer--icon"></i></a>
+    </footer>
 
     <script src="./assets/js/main.js"></script>
   </body>

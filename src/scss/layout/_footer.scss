@@ -1,0 +1,26 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  &--icon {
+    position: fixed;
+    right: 20%;
+    bottom: 2%;
+    background-color: white;
+    height: 50px;
+    width: 50px;
+    font-size: 24px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: black;
+    transition: all 0.2s linear;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

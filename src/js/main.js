@@ -6,6 +6,8 @@ const favContainerElem = document.querySelector(".js-favContainer");
 const searchButton = document.querySelector(".js-searchButton");
 const resetButton = document.querySelector(".js-resetButton");
 
+const arrowIcon = document.querySelector(".footer--icon");
+
 const APIPath = "https://api.jikan.moe/v3/search/anime?q=";
 
 let showsArray = [];
@@ -59,8 +61,16 @@ function checkIfFavorite(eachShow) {
   }
 }
 
+function renderErrorMessage() {
+  const errorContainer = document.createElement("p");
+  const errorMessage = document.createTextNode(
+    "No hemos encontrado resultados con esa búsqueda."
+  );
+  errorContainer.appendChild(errorMessage);
+  containerElem.appendChild(errorContainer);
+}
+
 function renderShows() {
-  containerElem.innerHTML = "";
   for (const eachShow of showsArray) {
     const eachShowContainer = document.createElement("div");
     eachShowContainer.classList.add("show--preview");
@@ -72,19 +82,32 @@ function renderShows() {
   }
 }
 
+function renderResults() {
+  containerElem.innerHTML = "";
+  if (showsArray.length === 0) {
+    renderErrorMessage();
+  } else {
+    renderShows();
+  }
+}
+
 function getDataApi() {
   fetch(APIPath + searchValue)
     .then((response) => response.json())
     .then((data) => {
       showsArray = data.results;
-      renderShows();
+      renderResults();
     });
 }
 
 function handleSearchButtonClick(event) {
   event.preventDefault();
   getSearchValue();
-  getDataApi();
+  if (searchValue === "") {
+    containerElem.innerHTML = "Venga, busca algo.";
+  } else {
+    getDataApi();
+  }
 }
 
 function setAsFavorite(event) {
@@ -93,7 +116,7 @@ function setAsFavorite(event) {
 }
 
 function setAsNotFavorite(showFavId) {
-  // Por qué el nodelist que devuelve el qsAll no permite hacer find
+  // Por qué lo que devuelve el qsAll no permite hacer find
   if (showsArray.length !== 0) {
     const showPreviewFavs = document.querySelectorAll(".favorite");
     const showPreviewFavsArr = Array.from(showPreviewFavs);
@@ -124,7 +147,7 @@ function handleRemoveFavClick(event) {
 function renderRemoveFavIcon(container) {
   const removeFavIcon = document.createElement("div");
   // añadir clase con espacios icono de font awesome
-  removeFavIcon.classList.add("remove--fav--icon");
+  removeFavIcon.classList.add("fav--remove__icon");
   removeFavIcon.addEventListener("click", handleRemoveFavClick);
   container.appendChild(removeFavIcon);
 }
@@ -133,13 +156,14 @@ function handleResetButtonFavClick() {
   favShowsArray = [];
   saveToLS();
   renderFavList();
-  renderShows();
+  renderResults();
 }
 
 function renderResetButtonFav() {
   const resetButtonFav = document.createElement("input");
   resetButtonFav.setAttribute("type", "reset");
   resetButtonFav.setAttribute("value", "Limpiar favoritos");
+  resetButtonFav.classList.add("main--buttonFav");
   resetButtonFav.addEventListener("click", handleResetButtonFavClick);
   favContainerElem.appendChild(resetButtonFav);
 }
@@ -150,7 +174,7 @@ function renderFavList() {
     renderResetButtonFav();
     for (const eachShow of favShowsArray) {
       const eachShowContainer = document.createElement("div");
-      eachShowContainer.classList.add("fav--show--preview");
+      eachShowContainer.classList.add("show--preview__fav");
       eachShowContainer.setAttribute("data-id", eachShow.mal_id);
       renderTitle(eachShowContainer, eachShow);
       renderImage(eachShowContainer, eachShow, favContainerElem);
@@ -183,10 +207,9 @@ function handleShowClick(event) {
   renderFavList();
 }
 
-function handleResetButtonClick(event) {
-  // event.preventDefault();
+function handleResetButtonClick() {
   showsArray = [];
-  renderShows();
+  containerElem.innerHTML = "";
 }
 
 function getDataLS() {
@@ -199,5 +222,8 @@ function getDataLS() {
 
 getDataLS();
 
+function handleArrowClick() {}
+
 searchButton.addEventListener("click", handleSearchButtonClick);
 resetButton.addEventListener("click", handleResetButtonClick);
+arrowIcon.addEventListener("click", handleArrowClick);
