@@ -3,11 +3,12 @@
     display: flex;
     justify-content: center;
     font-size: 32px;
-    color: white;
     &--title {
         text-transform: uppercase;
+        color: $green;
     }
     &--subtitle {
         text-transform: lowercase;
+        color: white;
     }
 }

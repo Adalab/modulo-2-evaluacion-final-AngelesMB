@@ -127,13 +127,10 @@
 }
 
 .fav--remove__icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: $green;
+  font-size: 24px;
   transition: all 0.1s ease-out;
   &:hover {
-    background-color: white;
+    color: white;
   }
 }
 
@@ -155,8 +152,11 @@
     margin: 5px;
     transition: all 0.5s ease-out;
     &:hover {
-      // opacity: 0.5;
+      opacity: 0.5;
       transform: scale(101%);
+      & .hidden {
+        opacity: 1;
+      }
     }
   }
   &--synopsis {
@@ -174,9 +174,11 @@
   order: -1;
 }
 
-.hidden {
-  opacity: 0;
-  &:hover {
-    opacity: 1;
-  }
-}
+// .hidden {
+//   // position: relative;
+//   // z-index: 1;
+//   // opacity: 0;
+//   // &:hover {
+//   //   opacity: 1;
+//   // }
+// }
