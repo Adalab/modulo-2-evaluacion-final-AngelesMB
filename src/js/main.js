@@ -9,6 +9,11 @@ let showsArray = [];
 let favShowsArray = [];
 let searchValue = "";
 
+// objeto para items showsArray
+// imagen placeholder
+// mouseover
+// dividir js ¿?
+
 // start app
 function startApp() {
   getDataLS();
@@ -113,19 +118,26 @@ function renderTitle(container, show) {
 function renderImage(container, show) {
   const divImg = document.createElement("div");
   divImg.classList.add("preview--image");
-  divImg.setAttribute("style", `background-image:url(${show.image_url})`);
+  const placeholderAPI =
+    "https://cdn.myanimelist.net/images/qm_50.gif?s=e1ff92a46db617cb83bfc1e205aff620";
+  if (show.image_url === placeholderAPI) {
+    divImg.setAttribute(
+      "style",
+      `background-image:url("./assets/images/placeholderBuscanime.png")`
+    );
+  } else {
+    divImg.setAttribute("style", `background-image:url(${show.image_url})`);
+  }
   container.appendChild(divImg);
   return divImg;
 }
 
-// Mouseover synopsis ¿?
-function renderSynopsis(divImg, container, show) {
+function renderSynopsis(container, show) {
   const synopsisElem = document.createElement("p");
   const synopsis = document.createTextNode(show.synopsis);
   synopsisElem.classList.add("preview--synopsis", "hidden");
   synopsisElem.appendChild(synopsis);
-  divImg.appendChild(synopsisElem);
-  container.appendChild(divImg);
+  container.appendChild(synopsisElem);
 }
 
 function renderRemoveFavIcon(container) {
@@ -164,9 +176,20 @@ function renderErrorMessage(message) {
 function getDataApi() {
   return fetch(APIPath + searchValue)
     .then((response) => response.json())
-    .then((data) => {
-      showsArray = data.results;
-    });
+    .then(
+      // (data) => {(showsArray = data.results)
+      (data) => {
+        showsArray = data.results.map((item) => {
+          const showObject = {};
+          showObject.mal_id = item.mal_id;
+          showObject.title = item.title;
+          showObject.image_url = item.image_url;
+          showObject.synopsis = item.synopsis;
+          return showObject;
+        });
+        console.log(showsArray);
+      }
+    );
 }
 
 function renderResults() {
@@ -176,16 +199,30 @@ function renderResults() {
 
 function renderShows() {
   for (const eachShow of showsArray) {
-    const eachShowContainer = document.createElement("div");
-    eachShowContainer.classList.add("show--preview");
-    eachShowContainer.setAttribute("data-id", eachShow.mal_id);
+    const eachShowContainer = renderContainer(eachShow);
     renderTitle(eachShowContainer, eachShow);
-    const divImg = renderImage(eachShowContainer, eachShow);
-    renderSynopsis(divImg, eachShowContainer, eachShow);
+    renderImage(eachShowContainer, eachShow);
+    renderSynopsis(eachShowContainer, eachShow);
     containerElem.appendChild(eachShowContainer);
     addListener(eachShowContainer, handleShowClick);
     checkIfFavorite(eachShow, eachShowContainer);
   }
+}
+
+function renderContainer(show) {
+  const eachShowContainer = document.createElement("div");
+  eachShowContainer.classList.add("show--preview");
+  eachShowContainer.setAttribute("data-id", show.mal_id);
+  eachShowContainer.addEventListener("mouseover", handleImgMouseover);
+  return eachShowContainer;
+}
+
+function handleImgMouseover(event) {
+  const eachShowContainer = event.currentTarget;
+  const img = eachShowContainer.querySelector(".preview--image");
+  const synopsisElem = eachShowContainer.querySelector(".preview--synopsis");
+  img.classList.add("opaque");
+  synopsisElem.classList.remove("hidden");
 }
 
 function checkIfFavorite(eachShow, eachShowContainer) {
@@ -207,7 +244,6 @@ function saveAsFavorite(event) {
   const showFound = findIdInArray(showsArray, showFavId);
   const showFavIndex = findIndexIdInArray(favShowsArray, showFavId);
   if (event.currentTarget.classList.contains("favorite")) {
-    // Crear objeto ¿? map
     favShowsArray.push(showFound);
   } else {
     favShowsArray.splice(showFavIndex, 1);
