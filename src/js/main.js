@@ -9,7 +9,7 @@ let showsArray = [];
 let favShowsArray = [];
 let searchValue = "";
 
-// start app
+// start app function
 function startApp() {
   getDataLS();
   const searchButton = document.querySelector(".js-searchButton");
