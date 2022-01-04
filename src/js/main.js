@@ -9,11 +9,6 @@ let showsArray = [];
 let favShowsArray = [];
 let searchValue = "";
 
-// objeto para items showsArray
-// imagen placeholder
-// mouseover
-// dividir js ¿?
-
 // start app
 function startApp() {
   getDataLS();
@@ -94,8 +89,6 @@ function renderFavList() {
   }
 }
 
-function ensureSearchValue() {}
-
 function renderShowPreviewFav(show) {
   const eachShowContainer = document.createElement("div");
   eachShowContainer.classList.add("show--preview__fav");
@@ -168,6 +161,7 @@ function getSearchValue() {
 function renderErrorMessage(message) {
   containerElem.innerHTML = "";
   const errorContainer = document.createElement("p");
+  errorContainer.classList.add("container--shows__error");
   const errorMessage = document.createTextNode(message);
   errorContainer.appendChild(errorMessage);
   containerElem.appendChild(errorContainer);
@@ -176,20 +170,18 @@ function renderErrorMessage(message) {
 function getDataApi() {
   return fetch(APIPath + searchValue)
     .then((response) => response.json())
-    .then(
-      // (data) => {(showsArray = data.results)
-      (data) => {
-        showsArray = data.results.map((item) => {
-          const showObject = {};
-          showObject.mal_id = item.mal_id;
-          showObject.title = item.title;
-          showObject.image_url = item.image_url;
-          showObject.synopsis = item.synopsis;
-          return showObject;
-        });
-        console.log(showsArray);
-      }
-    );
+    .then((data) => {
+      showsArray = data.results.map((item) => createShowObject(item));
+    });
+}
+
+function createShowObject(item) {
+  const showObject = {};
+  showObject.mal_id = item.mal_id;
+  showObject.title = item.title;
+  showObject.image_url = item.image_url;
+  showObject.synopsis = item.synopsis;
+  return showObject;
 }
 
 function renderResults() {
@@ -214,6 +206,7 @@ function renderContainer(show) {
   eachShowContainer.classList.add("show--preview");
   eachShowContainer.setAttribute("data-id", show.mal_id);
   eachShowContainer.addEventListener("mouseover", handleImgMouseover);
+  eachShowContainer.addEventListener("mouseleave", handleImgMouseleave);
   return eachShowContainer;
 }
 
@@ -223,6 +216,14 @@ function handleImgMouseover(event) {
   const synopsisElem = eachShowContainer.querySelector(".preview--synopsis");
   img.classList.add("opaque");
   synopsisElem.classList.remove("hidden");
+}
+
+function handleImgMouseleave(event) {
+  const eachShowContainer = event.currentTarget;
+  const img = eachShowContainer.querySelector(".preview--image");
+  const synopsisElem = eachShowContainer.querySelector(".preview--synopsis");
+  img.classList.remove("opaque");
+  synopsisElem.classList.add("hidden");
 }
 
 function checkIfFavorite(eachShow, eachShowContainer) {
