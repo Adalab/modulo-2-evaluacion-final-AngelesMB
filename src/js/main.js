@@ -37,6 +37,7 @@ function handleSearchButtonClick(event) {
   } else if (searchValue.length < 3) {
     renderErrorMessage("Introduce al menos 3 caracteres.");
   } else {
+    renderLoadingGif();
     getDataApi().then(() => {
       if (showsArray.length === 0) {
         renderErrorMessage("No hemos encontrado resultados con esa búsqueda.");
@@ -165,6 +166,14 @@ function renderErrorMessage(message) {
   const errorMessage = document.createTextNode(message);
   errorContainer.appendChild(errorMessage);
   containerElem.appendChild(errorContainer);
+}
+
+function renderLoadingGif() {
+  containerElem.innerHTML = "";
+  const gifElem = document.createElement("img");
+  gifElem.classList.add("container--shows__loading");
+  gifElem.src = "./assets/images/loading.gif";
+  containerElem.appendChild(gifElem);
 }
 
 function getDataApi() {

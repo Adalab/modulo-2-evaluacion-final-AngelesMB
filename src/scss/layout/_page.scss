@@ -85,7 +85,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    &__error {
+    &__error, &__loading {
       margin-top: 50px;
     }
   }
