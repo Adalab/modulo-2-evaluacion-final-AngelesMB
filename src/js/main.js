@@ -8,7 +8,6 @@ const APIPath = "https://api.jikan.moe/v3/search/anime?q=";
 let showsArray = [];
 let favShowsArray = [];
 let searchValue = "";
-const typeArray = ["OVA", "Special"];
 
 // start app function
 function startApp() {
@@ -50,13 +49,10 @@ function handleSearchButtonClick(event) {
 
 // set as favorite after click and render fav list
 function handleShowClick(event) {
-  // renderAsFavorite(event);
-  // saveAsFavorite(event);
-  // saveToLS();
-  // renderFavList();
-  const clickedShow = event.currentTarget;
-  console.log(clickedShow)
-  
+  renderAsFavorite(event);
+  saveAsFavorite(event);
+  saveToLS();
+  renderFavList();
 }
 
 // delete from favorites one by one
@@ -110,19 +106,6 @@ function renderTitle(container, show) {
   titleElem.classList.add("preview--title");
   titleElem.appendChild(title);
   container.appendChild(titleElem);
-}
-
-function renderType(container, show) {
-  const typeElem = document.createElement("h5");
-  const type = document.createTextNode(show.type);
-  typeElem.classList.add("preview--title");
-  typeElem.appendChild(type);
-  container.appendChild(typeElem);
-  // const foundInArray = typeArray.find(type => type === show.type)
-  // console.log(foundInArray)
-  if (typeArray.includes(show.type)) {
-    console.log("historia especial");
-  }
 }
 
 function renderImage(container, show) {
@@ -198,7 +181,6 @@ function createShowObject(item) {
   showObject.title = item.title;
   showObject.image_url = item.image_url;
   showObject.synopsis = item.synopsis;
-  showObject.type = item.type;
   return showObject;
 }
 
@@ -211,12 +193,11 @@ function renderShows() {
   for (const eachShow of showsArray) {
     const eachShowContainer = renderContainer(eachShow);
     renderTitle(eachShowContainer, eachShow);
-    renderType(eachShowContainer, eachShow);
     renderImage(eachShowContainer, eachShow);
     renderSynopsis(eachShowContainer, eachShow);
     containerElem.appendChild(eachShowContainer);
     addListener(eachShowContainer, handleShowClick);
-    // checkIfFavorite(eachShow, eachShowContainer);
+    checkIfFavorite(eachShow, eachShowContainer);
   }
 }
 
