@@ -1,4 +1,4 @@
-# Módulo 2: Ejercicio de evaluación final JavaScript
+# Módulo 2: Ejercicio de evaluación final de JavaScript
 
 **Enunciado:**
 
