@@ -2,7 +2,7 @@
 
 **Enunciado:**
 
-El ejercicio consiste en desarrollar una aplicación web de búsqueda de series de anime, que nos permite des/marcar las series como favoritas y guardarlas en local storage. El ejercicio también tiene una parte de maquetación con HTML y Sass.
+El ejercicio consiste en desarrollar una aplicación web de búsqueda de series de anime, que nos permite des/marcar las series como favoritas y guardarlas en local storage. El ejercicio también tiene una parte de maquetación con HTML y SASS.
 
 **1. Estructura básica:**
 La aplicación de búsqueda de serie consta de dos partes:
