@@ -189,8 +189,12 @@ function createShowObject(item) {
   showObject.mal_id = item.mal_id;
   showObject.title = item.title;
   showObject.image_url = item.images.webp.image_url;
-  showObject.synopsis = item.synopsis;
+  showObject.synopsis = trimSynopsis(item.synopsis);
   return showObject;
+}
+
+function trimSynopsis(synopsis) {
+  return synopsis && synopsis.length > 350 ? synopsis.slice(0, 350).trim() + "..." : synopsis;
 }
 
 function renderResults() {
