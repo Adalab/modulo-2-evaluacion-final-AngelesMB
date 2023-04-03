@@ -3,7 +3,7 @@
 const containerElem = document.querySelector(".js-container");
 const favContainerElem = document.querySelector(".js-favContainer");
 
-const APIPath = "https://api.jikan.moe/v3/search/anime?q=";
+const APIPath = "https://api.jikan.moe/v4/anime?q=";
 
 let showsArray = [];
 let favShowsArray = [];
@@ -179,8 +179,8 @@ function renderLoadingGif() {
 function getDataApi() {
   return fetch(APIPath + searchValue)
     .then((response) => response.json())
-    .then((data) => {
-      showsArray = data.results.map((item) => createShowObject(item));
+    .then((responseJson) => {
+      showsArray = responseJson.data.map((item) => createShowObject(item));
     });
 }
 
@@ -188,7 +188,7 @@ function createShowObject(item) {
   const showObject = {};
   showObject.mal_id = item.mal_id;
   showObject.title = item.title;
-  showObject.image_url = item.image_url;
+  showObject.image_url = item.images.webp.image_url;
   showObject.synopsis = item.synopsis;
   return showObject;
 }
